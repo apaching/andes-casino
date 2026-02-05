@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #00a6ff;
+  --color-secondary: #f2f2fa;
+  --color-txt: #444;
+  --color-txt-secondary: #888;
+  --color-primary-green: #41bc2c;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
