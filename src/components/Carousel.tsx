@@ -33,6 +33,8 @@ export default function Carousel({
     return () => clearInterval(interval);
   }, [setCurrentIndex, autoScrollInterval, images.length]);
 
+  console.log(currentIndex);
+
   return (
     <div className="overflow-hidden">
       <div ref={containerRef} className="flex gap-4">
