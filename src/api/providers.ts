@@ -10,7 +10,7 @@ export const mockProviders: Provider[] = [
   { value: "imoon", label: "iMoon" },
   { value: "ortiz", label: "Ortiz" },
   { value: "playtech", label: "Playtech" },
-  { value: "fat_panda", label: "Fat Panda" },
+  // { value: "fat_panda", label: "Fat Panda" },
 ];
 
 export const providerApi = {

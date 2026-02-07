@@ -12,6 +12,12 @@ import InfoSection from "../components/InfoSection";
 import { providerApi } from "../api/providers";
 import { useProvider } from "../hooks/useProvider";
 
+/**
+ * Provider gets filtered depending on what category
+ * -> Inicio -> ALL providers
+ * -> Click a category provide all
+ */
+
 export default function Main() {
   /**
    * Decided to use useContext for these states because I noticed
