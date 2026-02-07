@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Category } from "../types/types";
+import type { Category, Provider } from "../types/types";
 import { categoryTabs } from "../constants/categories";
 import { FilterContext } from "../context/FilterContext";
 
@@ -10,7 +10,9 @@ export default function FilterProvider({
 }) {
   // prettier-ignore
   const [selectedCategory, setSelectedCategory] = useState<Category>(categoryTabs[0]);
-  const [selectedProvider, setSelectedProvider] = useState("");
+  const [selectedProvider, setSelectedProvider] = useState<Provider | null>(
+    null,
+  );
   const [isSearchActive, setIsSearchActive] = useState(false);
 
   return (

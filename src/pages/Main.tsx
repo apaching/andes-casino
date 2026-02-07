@@ -3,12 +3,14 @@ import Carousel from "../components/Carousel";
 import GameList from "../components/GameList";
 import { useFilter } from "../hooks/useFilter";
 import SearchBar from "../components/SearchBar";
-import type { Category } from "../types/types";
+import type { Category, Provider } from "../types/types";
 import CategoryFilter from "../components/CategoryFilter";
 import ProviderFilter from "../components/ProviderFilter";
 import { gameApi } from "../api/games";
 import { useGame } from "../hooks/useGame";
 import InfoSection from "../components/InfoSection";
+import { providerApi } from "../api/providers";
+import { useProvider } from "../hooks/useProvider";
 
 export default function Main() {
   /**
@@ -23,6 +25,8 @@ export default function Main() {
     setSelectedCategory,
     isSearchActive,
     setIsSearchActive,
+    selectedProvider,
+    setSelectedProvider,
   } = useFilter();
 
   // prettier-ignore
@@ -32,8 +36,14 @@ export default function Main() {
     counts, 
     setCounts,
     total,
-    setTotal
+    setTotal,
   } = useGame();
+
+  // prettier-ignore
+  const {
+    providers,
+    setProviders,
+  } = useProvider();
 
   const handleSearchClick = () => {
     setIsSearchActive(!isSearchActive);
@@ -43,25 +53,55 @@ export default function Main() {
     setSelectedCategory(category);
   };
 
+  const handleProviderClick = (provider: Provider) => {
+    if (selectedProvider === provider) {
+      setSelectedProvider(null);
+    } else {
+      setSelectedProvider(provider);
+    }
+  };
+
   useEffect(() => {
-    const loadGames = async () => {
-      // setIsLoading -> true
+    console.log(selectedProvider);
+  }, [selectedProvider]);
 
+  useEffect(() => {
+    const loadData = async () => {
       try {
-        const response = await gameApi.getGames();
+        const [gamesResponse, providersResponse] = await Promise.all([
+          gameApi.getGames(),
+          providerApi.getProviders(),
+        ]);
 
-        if (!response.success) alert(response.error);
+        setGames(gamesResponse.games);
+        setCounts(gamesResponse.counts);
+        setTotal(gamesResponse.total);
 
-        setGames(response.games);
-        setCounts(response.counts);
-        setTotal(response.total);
+        setProviders(providersResponse.providers);
+      } catch (error) {
+        if (error instanceof Error) {
+          /**
+           *  Handle by showing toast, etc.
+           */
+          console.log(error.message);
+        } else {
+          console.log("Something went wrong");
+        }
       } finally {
-        // setIsLoading -> false
+        /** */
       }
     };
 
-    loadGames();
+    loadData();
   }, []);
+
+  const getCategoryCount = () => {
+    if (selectedCategory.value === "home") {
+      return total;
+    }
+
+    return counts[selectedCategory.value] || 0;
+  };
 
   const filteredGames = games.filter((game) =>
     selectedCategory.value === "home"
@@ -73,19 +113,15 @@ export default function Main() {
           : null,
   );
 
-  const getCategoryCount = () => {
-    if (selectedCategory.value === "home") {
-      return total;
-    }
-
-    return counts[selectedCategory.value] || 0;
-  };
-
   return (
     <main className="flex h-screen w-screen flex-col">
       <div className="flex flex-col gap-4 px-3">
         <Carousel />
-        <ProviderFilter />
+        <ProviderFilter
+          providers={providers}
+          selectedProvider={selectedProvider}
+          onProviderClick={handleProviderClick}
+        />
         <CategoryFilter
           isSearchActive={isSearchActive}
           onSearchClick={handleSearchClick}

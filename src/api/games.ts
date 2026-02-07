@@ -18,14 +18,6 @@ export const mockGames: Game[] = [
     image: "/game_pictures/8_tigers_gold_megaways.webp",
   },
   {
-    id: "3",
-    name: "Battle Dwarf 2",
-    category: "slots",
-    provider: "winfast",
-    isHot: false,
-    image: "/game_pictures/battle_dwarf_2.webp",
-  },
-  {
     id: "4",
     name: "Big Bass Boxing Bonus Round",
     category: "popular",
@@ -330,14 +322,6 @@ export const mockGames: Game[] = [
     image: "/game_pictures/crash_1917.webp",
   },
   {
-    id: "42",
-    name: "Three Card Poker Deluxe",
-    category: "cards",
-    provider: "habanero",
-    isHot: false,
-    image: "/game_pictures/three_card_poker_deluxe.webp",
-  },
-  {
     id: "43",
     name: "Black Jack X 27 Emerald",
     category: "cards",
@@ -352,14 +336,6 @@ export const mockGames: Game[] = [
     provider: "skywind_group",
     isHot: false,
     image: "/game_pictures/black_jack_max.webp",
-  },
-  {
-    id: "45",
-    name: "Black Jack Classic 7",
-    category: "live",
-    provider: "evolution",
-    isHot: false,
-    image: "/game_pictures/black_jack_classic_7.webp",
   },
   {
     id: "46",
@@ -385,14 +361,6 @@ export const mockGames: Game[] = [
     isHot: false,
     image: "/game_pictures/pig_farm.webp",
   },
-  {
-    id: "49",
-    name: "Plush Wins",
-    category: "fat_panda",
-    provider: "fat_panda",
-    isHot: false,
-    image: "/game_pictures/plushie_wins.webp",
-  },
 ];
 
 export const gameApi = {
@@ -405,7 +373,6 @@ export const gameApi = {
     hasMore: boolean;
     total: number;
     counts: Record<string, number>;
-    error?: string;
   }> => {
     return new Promise((resolve) => {
       setTimeout(() => {

@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import { type Category } from "../types/types";
+import type { Category, Provider } from "../types/types";
 
 export interface FilterContextType {
   selectedCategory: Category;
   setSelectedCategory: (category: Category) => void;
-  selectedProvider: string;
-  setSelectedProvider: (provider: string) => void;
+  selectedProvider: Provider | null;
+  setSelectedProvider: (provider: Provider | null) => void;
   isSearchActive: boolean;
   setIsSearchActive: (isActive: boolean) => void;
 }

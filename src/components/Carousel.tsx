@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel from "embla-carousel-react";
 
 interface CarouselInterface {
   images?: string[];
@@ -13,29 +14,15 @@ const defaultImages = [
 
 export default function Carousel({
   images = defaultImages,
-  autoScrollInterval = 1000,
+  autoScrollInterval = 3000,
 }: CarouselInterface) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  /**
-   * Self note:
-   *
-   * setTimeout vs. setInterval -> setTimeout will run once, setInterval will run repeatedly
-   * setTimeout can be used, but currentIndex must be a dependency of the useEffect
-   */
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, autoScrollInterval);
-
-    return () => clearInterval(interval);
-  }, [setCurrentIndex, autoScrollInterval, images.length]);
+  const [emblaRef] = useEmblaCarousel({ loop: true, duration: 20 }, [
+    Autoplay({ delay: autoScrollInterval, stopOnInteraction: false }),
+  ]);
 
   return (
-    <div className="overflow-hidden">
-      <div ref={containerRef} className="flex gap-4">
+    <div className="overflow-hidden" ref={emblaRef}>
+      <div className="flex gap-4">
         {images.map((image, index) => (
           <div
             key={index}
@@ -44,6 +31,7 @@ export default function Carousel({
             <img
               className="h-full w-full rounded-[15px] object-cover sm:rounded-[25px]"
               src={image}
+              alt={`Carousel image ${index + 1}`}
             />
           </div>
         ))}
