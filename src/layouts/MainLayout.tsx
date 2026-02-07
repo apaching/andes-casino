@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import Footer from "../components/BottomNavBar";
-import CategoryProvider from "../providers/FilterProvider";
 import GameProvder from "../providers/GameProvider";
+import CategoryProvider from "../providers/FilterProvider";
 
 const MainLayout = () => {
   return (
     <GameProvder>
       <CategoryProvider>
         <Header />
-        <main>
+        <main className="pt-16.5">
           <Outlet />
         </main>
         {/* <Footer /> */}

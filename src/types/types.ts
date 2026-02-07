@@ -3,6 +3,11 @@ export type Category = {
   label: string;
 };
 
+export type Provider = {
+  value: string;
+  label: string;
+};
+
 export type Game = {
   id: string;
   name: string;
