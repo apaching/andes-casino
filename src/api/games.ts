@@ -373,6 +373,7 @@ export const gameApi = {
     hasMore: boolean;
     total: number;
     counts: Record<string, number>;
+    providerCounts: Record<string, number>;
   }> => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -388,7 +389,22 @@ export const gameApi = {
           {},
         );
 
-        resolve({ success: true, games, hasMore, total, counts });
+        const providerCounts: Record<string, number> = mockGames.reduce(
+          (acc: Record<string, number>, game) => {
+            acc[game.provider] = (acc[game.provider] || 0) + 1;
+            return acc;
+          },
+          {},
+        );
+
+        resolve({
+          success: true,
+          games,
+          hasMore,
+          total,
+          counts,
+          providerCounts,
+        });
       }, 3000);
     });
   },

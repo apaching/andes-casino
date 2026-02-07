@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Provider } from "../types/types";
 
 interface ProviderCardProps {
-  amount?: number;
+  amount: number;
   provider: Provider;
   isSelected: boolean;
   onProviderClick: (provider: Provider) => void;
@@ -29,7 +29,7 @@ function ProviderCard({
         className="h-full object-cover"
         src={`provider_pictures/${provider.value}.webp`}
       />
-      <p className="text-txt text-[10px] opacity-70">({amount || 3})</p>
+      <p className="text-txt text-[10px] opacity-70">({amount})</p>
     </div>
   );
 }
@@ -38,12 +38,14 @@ interface ProviderFilterProps {
   providers: Provider[];
   selectedProvider: Provider | null;
   onProviderClick: (provider: Provider) => void;
+  providerCounts: Record<string, number>;
 }
 
 export default function ProviderFilter({
   providers,
   selectedProvider,
   onProviderClick,
+  providerCounts,
 }: ProviderFilterProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -56,6 +58,8 @@ export default function ProviderFilter({
 
   const scrollPrev = () => emblaApi?.scrollPrev();
   const scrollNext = () => emblaApi?.scrollNext();
+
+  console.log(providerCounts);
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -84,6 +88,7 @@ export default function ProviderFilter({
           {providers.map((provider, index) => (
             <ProviderCard
               key={index}
+              amount={providerCounts[provider.value]}
               provider={provider}
               isSelected={provider === selectedProvider}
               onProviderClick={onProviderClick}

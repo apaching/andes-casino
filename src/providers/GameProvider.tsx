@@ -3,11 +3,13 @@ import type { Game } from "../types/types";
 import { useState, type ReactNode } from "react";
 import { GameContext } from "../context/GameContext";
 
+// prettier-ignore
 export default function GameProvider({ children }: { children: ReactNode }) {
   const [games, setGames] = useState<Game[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [total, setTotal] = useState(0);
   const [counts, setCounts] = useState<Record<string, number>>({});
+  const [providerCounts, setProviderCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
 
@@ -26,6 +28,8 @@ export default function GameProvider({ children }: { children: ReactNode }) {
         setLoading,
         offset,
         setOffset,
+        providerCounts,
+        setProviderCounts
       }}
     >
       {children}

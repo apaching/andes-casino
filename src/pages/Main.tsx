@@ -37,6 +37,8 @@ export default function Main() {
     setCounts,
     total,
     setTotal,
+    providerCounts,
+    setProviderCounts
   } = useGame();
 
   // prettier-ignore
@@ -76,6 +78,7 @@ export default function Main() {
         setGames(gamesResponse.games);
         setCounts(gamesResponse.counts);
         setTotal(gamesResponse.total);
+        setProviderCounts(gamesResponse.providerCounts);
 
         setProviders(providersResponse.providers);
       } catch (error) {
@@ -121,6 +124,7 @@ export default function Main() {
           providers={providers}
           selectedProvider={selectedProvider}
           onProviderClick={handleProviderClick}
+          providerCounts={providerCounts}
         />
         <CategoryFilter
           isSearchActive={isSearchActive}

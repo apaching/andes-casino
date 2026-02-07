@@ -14,6 +14,8 @@ export interface GameContextType {
   setLoading: (loading: boolean) => void;
   offset: number;
   setOffset: (offset: number) => void;
+  providerCounts: Record<string, number>;
+  setProviderCounts: (providerCounts: Record<string, number>) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
