@@ -3,7 +3,7 @@ import Button from "./Button";
 
 function ProviderCard() {
   return (
-    <div className="bg-secondary flex h-8.75 w-[30%] flex-row items-center justify-center gap-1 rounded p-1">
+    <div className="bg-secondary flex h-8.75 w-[33%] flex-row items-center justify-center gap-1 rounded p-1">
       <img className="h-full object-cover" src="OAKS.webp" />
       <p className="text-txt text-[10px] opacity-70">(3)</p>
     </div>

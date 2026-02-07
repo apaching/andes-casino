@@ -1,21 +1,27 @@
+import { Search } from "lucide-react";
 import type { Category } from "../types/types";
 import { categoryTabs } from "../constants/categories";
 
+/**
+ * Decided to keep CategoryFilterItem in the same file
+ * because it's not gonna be used anywhere else. Same
+ * with ProviderFilter
+ */
 interface CategoryFilterItemProps {
   isActive?: boolean;
   category: Category;
-  onSelect: (category: Category) => void;
+  onCategorySelect: (category: Category) => void;
 }
 
 function CategoryFilterItem({
   isActive,
   category,
-  onSelect,
+  onCategorySelect,
 }: CategoryFilterItemProps) {
   return (
     <div
       onClick={() => {
-        onSelect(category);
+        onCategorySelect(category);
       }}
       className="relative flex h-16 w-15 flex-col items-center justify-center hover:cursor-pointer"
     >
@@ -24,7 +30,6 @@ function CategoryFilterItem({
           <p className="text-[10px] font-bold text-white">8926</p>
         </div>
       )}
-
       <img
         className="h-10"
         src={
@@ -43,22 +48,43 @@ function CategoryFilterItem({
 }
 
 interface CategoryFilterProps {
+  isSearchActive: boolean;
+  onSearchClick: () => void;
   selectedCategory: Category;
-  onSelect: (category: Category) => void;
+  onCategorySelect: (category: Category) => void;
 }
 
 export default function CategoryFilter({
+  isSearchActive,
+  onSearchClick,
   selectedCategory,
-  onSelect,
+  onCategorySelect,
 }: CategoryFilterProps) {
   return (
-    <div className="no-scrollbar flex flex-row overflow-x-auto">
-      <div className="flex flex-row gap-2.5">
+    <div className="no-scrollbar mx -mx-4 flex flex-row overflow-x-auto">
+      <div className="flex flex-row items-center gap-2.5 px-2">
+        <div
+          onClick={onSearchClick}
+          className="flex h-16 w-16 flex-col items-center justify-center hover:cursor-pointer"
+        >
+          <Search
+            size={40}
+            className={`${isSearchActive ? "text-primary underline" : "text-[#888888]"}`}
+          />
+          <p
+            className={`${isSearchActive ? "text-primary underline" : "text-txt-secondary"} text-xs whitespace-nowrap uppercase decoration-2 underline-offset-2`}
+          >
+            Buscar
+          </p>
+        </div>
+
+        <div className="bg-txt-secondary/50 h-[55%] w-px" />
+
         {categoryTabs.map((category) => (
           <CategoryFilterItem
             isActive={category === selectedCategory}
             category={category}
-            onSelect={onSelect}
+            onCategorySelect={onCategorySelect}
           />
         ))}
       </div>
