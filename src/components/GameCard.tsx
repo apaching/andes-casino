@@ -1,14 +1,17 @@
 import { Star } from "lucide-react";
 import type { Game } from "../types/types";
+import { useFilter } from "../hooks/useFilter";
 
 interface GameCardProps {
   game: Game;
 }
 
 export default function GameCard({ game }: GameCardProps) {
+  const { selectedCategory } = useFilter();
+
   return (
     <div className="group relative h-auto w-full overflow-hidden rounded-2xl">
-      {game.isHot && (
+      {game.isHot && selectedCategory.value != "popular" && (
         <img
           src="/company_assets/hot_badge.webp"
           className="absolute top-1 left-1 z-40 w-10"

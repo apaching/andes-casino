@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import GameProvder from "../providers/GameProvider";
+import GameProvider from "../providers/GameProvider";
 import CategoryProvider from "../providers/FilterProvider";
 
 const MainLayout = () => {
   return (
-    <GameProvder>
+    <GameProvider>
       <CategoryProvider>
         <Header />
         <main className="pt-16.5">
@@ -13,7 +13,7 @@ const MainLayout = () => {
         </main>
         {/* <Footer /> */}
       </CategoryProvider>
-    </GameProvder>
+    </GameProvider>
   );
 };
 

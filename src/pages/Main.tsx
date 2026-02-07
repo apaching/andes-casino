@@ -8,6 +8,7 @@ import CategoryFilter from "../components/CategoryFilter";
 import ProviderFilter from "../components/ProviderFilter";
 import { gameApi } from "../api/games";
 import { useGame } from "../hooks/useGame";
+import InfoSection from "../components/InfoSection";
 
 export default function Main() {
   /**
@@ -65,9 +66,11 @@ export default function Main() {
   const filteredGames = games.filter((game) =>
     selectedCategory.value === "home"
       ? game
-      : selectedCategory.value === game.category
-        ? game
-        : null,
+      : selectedCategory.value === "poular"
+        ? game.isHot === true
+        : selectedCategory.value === game.category
+          ? game
+          : null,
   );
 
   const getCategoryCount = () => {
@@ -80,7 +83,7 @@ export default function Main() {
 
   return (
     <main className="flex h-screen w-screen flex-col">
-      <div className="flex flex-col gap-4 px-4">
+      <div className="flex flex-col gap-4 px-3">
         <Carousel />
         <ProviderFilter />
         <CategoryFilter
@@ -92,6 +95,7 @@ export default function Main() {
         />
         {isSearchActive && <SearchBar />}
         <GameList games={filteredGames} />
+        {selectedCategory.value === "home" && <InfoSection />}
       </div>
     </main>
   );

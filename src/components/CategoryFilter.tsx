@@ -73,7 +73,7 @@ export default function CategoryFilter({
         >
           <Search
             size={40}
-            className={`${isSearchActive ? "text-primary underline" : "text-[#888888]"}`}
+            className={`${isSearchActive ? "text-primary underline" : "text-[#C7C7C7]"}`}
           />
           <p
             className={`${isSearchActive ? "text-primary underline" : "text-txt-secondary"} text-xs whitespace-nowrap uppercase decoration-2 underline-offset-2`}
