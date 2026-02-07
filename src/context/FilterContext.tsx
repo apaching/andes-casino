@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { Category } from "../types/types";
+import { type Category } from "../types/types";
 
 export interface FilterContextType {
   selectedCategory: Category;

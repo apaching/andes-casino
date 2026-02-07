@@ -11,12 +11,14 @@ interface CategoryFilterItemProps {
   isActive?: boolean;
   category: Category;
   onCategorySelect: (category: Category) => void;
+  amount?: number;
 }
 
 function CategoryFilterItem({
   isActive,
   category,
   onCategorySelect,
+  amount = 0,
 }: CategoryFilterItemProps) {
   return (
     <div
@@ -27,7 +29,7 @@ function CategoryFilterItem({
     >
       {isActive && (
         <div className="bg-active-bg absolute top-0 -right-2 rounded px-1 py-0.5">
-          <p className="text-[10px] font-bold text-white">8926</p>
+          <p className="text-[10px] font-bold text-white">{amount}</p>
         </div>
       )}
       <img
@@ -52,6 +54,7 @@ interface CategoryFilterProps {
   onSearchClick: () => void;
   selectedCategory: Category;
   onCategorySelect: (category: Category) => void;
+  amount: number;
 }
 
 export default function CategoryFilter({
@@ -59,6 +62,7 @@ export default function CategoryFilter({
   onSearchClick,
   selectedCategory,
   onCategorySelect,
+  amount,
 }: CategoryFilterProps) {
   return (
     <div className="no-scrollbar mx -mx-4 flex flex-row overflow-x-auto">
@@ -80,11 +84,13 @@ export default function CategoryFilter({
 
         <div className="bg-txt-secondary/50 h-[55%] w-px" />
 
-        {categoryTabs.map((category) => (
+        {categoryTabs.map((category, index) => (
           <CategoryFilterItem
+            key={index}
             isActive={category === selectedCategory}
             category={category}
             onCategorySelect={onCategorySelect}
+            amount={amount}
           />
         ))}
       </div>
