@@ -135,6 +135,31 @@ export default function Main() {
           ),
         );
 
+  /**
+   * Calculate provider counts based on selected category
+   */
+  const filteredProviderCounts =
+    selectedCategory.value === "home"
+      ? providerCounts
+      : providers.reduce(
+          (acc, provider) => {
+            acc[provider.value] = games.filter((game) => {
+              const categoryMatch =
+                selectedCategory.value === "popular"
+                  ? game.isHot === true
+                  : selectedCategory.value === "pragmatic"
+                    ? game.provider === "pragmatic"
+                    : selectedCategory.value === "fat_panda"
+                      ? game.provider === "fat_panda"
+                      : selectedCategory.value === game.category;
+
+              return categoryMatch && game.provider === provider.value;
+            }).length;
+            return acc;
+          },
+          {} as Record<string, number>,
+        );
+
   const filteredGames = games.filter((game) => {
     const categoryMatch =
       selectedCategory.value === "home"
@@ -160,7 +185,7 @@ export default function Main() {
         providers={filteredProviders}
         selectedProvider={selectedProvider}
         onProviderClick={handleProviderClick}
-        providerCounts={providerCounts}
+        providerCounts={filteredProviderCounts}
         onMasClick={handleDialogToggle}
       />
       <CategoryFilter
@@ -179,7 +204,7 @@ export default function Main() {
         onClose={handleDialogToggle}
         selectedProvider={selectedProvider}
         onProviderClick={handleProviderClick}
-        providerCounts={providerCounts}
+        providerCounts={filteredProviderCounts}
       />
     </div>
   );

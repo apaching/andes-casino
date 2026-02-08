@@ -255,7 +255,7 @@ export const mockGames: Game[] = [
     category: "slots",
     provider: "skywind_group",
     isHot: false,
-    image: "/game_pictures/sugar_Bonanza_deluxe.webp",
+    image: "/game_pictures/sugar_onanza_deluxe.webp",
   },
   {
     id: "34",
