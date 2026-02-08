@@ -81,16 +81,18 @@ export default function SearchBar({ isOpen }: SearchBarProps) {
             </div>
           )}
 
-          {!isLoading && searchResults.length === 0 && (
-            <div className="flex items-center justify-center p-4">
-              <p className="text-sm text-[#9CA3AF]">
-                No se ha encontrado ningún juego.
-              </p>
-            </div>
-          )}
+          {!isLoading &&
+            searchResults.length === 0 &&
+            searchQuery.trim().length > 4 && (
+              <div className="flex items-center justify-center p-4">
+                <p className="text-sm text-[#9CA3AF]">
+                  No se ha encontrado ningún juego.
+                </p>
+              </div>
+            )}
 
           {!isLoading && searchResults.length > 0 && (
-            <div className="grid grid-cols-2 py-2">
+            <div className="grid grid-cols-2 gap-2 px-2 py-2">
               {searchResults.map((game, index) => (
                 <SearchResultItem
                   key={index}

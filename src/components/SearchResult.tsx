@@ -15,9 +15,9 @@ export default function SearchResultItem({
   return (
     <div
       onClick={onClick}
-      className="flex cursor-pointer items-center gap-3 px-3 py-2 transition-colors hover:bg-gray-100"
+      className="flex w-full cursor-pointer items-center gap-2 rounded-xl transition-colors hover:bg-white"
     >
-      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg">
+      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg">
         <img
           src={game.image}
           alt={game.name}
