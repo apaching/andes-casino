@@ -11,21 +11,16 @@ import InfoSection from "../components/InfoSection";
 import CategoryFilter from "../components/CategoryFilter";
 import ProviderFilter from "../components/ProviderFilter";
 import ProviderDialog from "../components/ProviderDialog";
+import Footer from "../components/Footer";
 import type { Category, Provider } from "../types/types";
 
 export default function Main() {
   const [isProviderDialogVisible, setIsProviderDialogVisible] = useState(false);
 
   /**
-   * Decided to use useContext for these states because I noticed
-   * on the original site, when you navigate to another page, upon
-   * navigating back, the state of the filter & fetched games remain
-   * the same
-   */
-
-  /**
-   * Debated if the children components should consume the context
-   * instead of this parent page
+   * Decided to use useContext to handle the state. I noticed on the
+   * reference site that the state was being handled via URL, but I
+   * noticed it late into making the assesment 🥲
    */
 
   const {
@@ -198,6 +193,7 @@ export default function Main() {
       <SearchBar isOpen={isSearchActive} />
       <GameList games={filteredGames} />
       <InfoSection isVisible={selectedCategory.value === "home"} />
+      <Footer />
       <ProviderDialog
         providers={filteredProviders}
         isOpen={isProviderDialogVisible}
