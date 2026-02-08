@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import GameProvider from "../providers/GameProvider";
 import CategoryProvider from "../providers/FilterProvider";
 import ProviderProvider from "../providers/ProviderProvider";
+import BottomNavBar from "../components/BottomNavBar";
 
 export default function MainLayout() {
   return (
@@ -10,10 +11,10 @@ export default function MainLayout() {
       <ProviderProvider>
         <CategoryProvider>
           <Header />
-          <main className="pt-16.5">
+          <main className="pb-16 pt-16.5 sm:pb-0">
             <Outlet />
           </main>
-          {/* <Footer /> */}
+          <BottomNavBar />
         </CategoryProvider>
       </ProviderProvider>
     </GameProvider>
