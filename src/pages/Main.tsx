@@ -138,6 +138,7 @@ export default function Main() {
 
     return categoryMatch && providerMatch;
   });
+
   return (
     <div className="relative flex flex-col gap-4 px-3">
       <Carousel />
