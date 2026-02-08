@@ -353,14 +353,6 @@ export const mockGames: Game[] = [
     isHot: false,
     image: "/game_pictures/blue_wizard.webp",
   },
-  {
-    id: "48",
-    name: "Pig Farm",
-    category: "fat_panda",
-    provider: "fat_panda",
-    isHot: false,
-    image: "/game_pictures/pig_farm.webp",
-  },
 ];
 
 export const gameApi = {

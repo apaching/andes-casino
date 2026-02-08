@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
 import GameList from "../components/GameList";
 import { useFilter } from "../hooks/useFilter";
@@ -11,14 +11,11 @@ import { useGame } from "../hooks/useGame";
 import InfoSection from "../components/InfoSection";
 import { providerApi } from "../api/providers";
 import { useProvider } from "../hooks/useProvider";
-
-/**
- * Provider gets filtered depending on what category
- * -> Inicio -> ALL providers
- * -> Click a category provide all
- */
+import ProviderDialog from "../components/ProviderDialog";
 
 export default function Main() {
+  const [isProviderDialogVisible, setIsProviderDialogVisible] = useState(false);
+
   /**
    * Decided to use useContext for these states because I noticed
    * on the original site, when you navigate to another page, upon
@@ -69,9 +66,9 @@ export default function Main() {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedProvider);
-  }, [selectedProvider]);
+  const handleDialogToggle = (status: boolean) => {
+    setIsProviderDialogVisible(status);
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -112,37 +109,59 @@ export default function Main() {
     return counts[selectedCategory.value] || 0;
   };
 
-  const filteredGames = games.filter((game) =>
+  /**
+   *  selectedCategory === home -> all providers
+   *  selectedCategory === anything else -> return
+   *  provider if at least one game has that category & provider
+   */
+  const filteredProviders =
     selectedCategory.value === "home"
-      ? game
-      : selectedCategory.value === "poular"
-        ? game.isHot === true
-        : selectedCategory.value === game.category
-          ? game
-          : null,
-  );
+      ? providers
+      : providers.filter((provider) =>
+          games.some(
+            (game) =>
+              game.category === selectedCategory.value &&
+              game.provider === provider.value,
+          ),
+        );
 
+  const filteredGames = games.filter((game) => {
+    const categoryMatch =
+      selectedCategory.value === "home"
+        ? true
+        : selectedCategory.value === "popular"
+          ? game.isHot === true
+          : selectedCategory.value === game.category;
+
+    const providerMatch =
+      !selectedProvider || game.provider === selectedProvider.value;
+
+    return categoryMatch && providerMatch;
+  });
   return (
-    <main className="flex h-screen w-screen flex-col">
-      <div className="flex flex-col gap-4 px-3">
-        <Carousel />
-        <ProviderFilter
-          providers={providers}
-          selectedProvider={selectedProvider}
-          onProviderClick={handleProviderClick}
-          providerCounts={providerCounts}
-        />
-        <CategoryFilter
-          isSearchActive={isSearchActive}
-          onSearchClick={handleSearchClick}
-          selectedCategory={selectedCategory}
-          onCategorySelect={handleSelectCategory}
-          amount={getCategoryCount()}
-        />
-        {isSearchActive && <SearchBar />}
-        <GameList games={filteredGames} />
-        {selectedCategory.value === "home" && <InfoSection />}
-      </div>
-    </main>
+    <div className="relative flex flex-col gap-4 px-3">
+      <Carousel />
+      <ProviderFilter
+        providers={filteredProviders}
+        selectedProvider={selectedProvider}
+        onProviderClick={handleProviderClick}
+        providerCounts={providerCounts}
+        onMasClick={handleDialogToggle}
+      />
+      <CategoryFilter
+        isSearchActive={isSearchActive}
+        onSearchClick={handleSearchClick}
+        selectedCategory={selectedCategory}
+        onCategorySelect={handleSelectCategory}
+        amount={getCategoryCount()}
+      />
+      <SearchBar isOpen={isSearchActive} />
+      <GameList games={filteredGames} />
+      <InfoSection isVisible={selectedCategory.value === "home"} />
+      <ProviderDialog
+        isOpen={isProviderDialogVisible}
+        onClose={handleDialogToggle}
+      />
+    </div>
   );
 }

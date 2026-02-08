@@ -9,13 +9,15 @@ interface ProviderCardProps {
   provider: Provider;
   isSelected: boolean;
   onProviderClick: (provider: Provider) => void;
+  className?: string;
 }
 
-function ProviderCard({
+export function ProviderCard({
   provider,
   amount,
   isSelected,
   onProviderClick,
+  className = "",
 }: ProviderCardProps) {
   return (
     <div
@@ -23,7 +25,7 @@ function ProviderCard({
         e.stopPropagation();
         onProviderClick(provider);
       }}
-      className={`${isSelected ? "border-primary border-2" : "border-2 border-transparent"} bg-secondary mr-4 flex h-8.75 w-[31%] shrink-0 grow-0 flex-row items-center justify-center gap-1 rounded p-1 hover:cursor-pointer`}
+      className={` ${isSelected ? "border-primary border-2" : "border-2 border-transparent"} bg-secondary flex flex-row items-center justify-center gap-1 rounded p-1 hover:cursor-pointer ${className} `}
     >
       <img
         className="h-full object-cover"
@@ -39,6 +41,7 @@ interface ProviderFilterProps {
   selectedProvider: Provider | null;
   onProviderClick: (provider: Provider) => void;
   providerCounts: Record<string, number>;
+  onMasClick: (status: boolean) => void;
 }
 
 export default function ProviderFilter({
@@ -46,6 +49,7 @@ export default function ProviderFilter({
   selectedProvider,
   onProviderClick,
   providerCounts,
+  onMasClick,
 }: ProviderFilterProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -59,14 +63,17 @@ export default function ProviderFilter({
   const scrollPrev = () => emblaApi?.scrollPrev();
   const scrollNext = () => emblaApi?.scrollNext();
 
-  console.log(providerCounts);
-
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex w-full flex-row justify-between">
         <p className="text-sm">Proveedores de juego</p>
         <div className="flex flex-row items-center gap-2.5">
-          <Button buttonStyle="flex bg-secondary p-2 items-center justify-center rounded hover:opacity-70 text-xs">
+          <Button
+            onClick={() => {
+              onMasClick(true);
+            }}
+            buttonStyle="flex bg-secondary p-2 items-center justify-center rounded hover:opacity-70 text-xs"
+          >
             MÁS
           </Button>
           <Button
@@ -92,6 +99,7 @@ export default function ProviderFilter({
               provider={provider}
               isSelected={provider === selectedProvider}
               onProviderClick={onProviderClick}
+              className="mr-4 h-8.75 w-[31%] shrink-0 grow-0"
             />
           ))}
         </div>

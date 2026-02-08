@@ -1,6 +1,12 @@
 import { Search } from "lucide-react";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  isOpen: boolean;
+}
+
+export default function SearchBar({ isOpen }: SearchBarProps) {
+  if (isOpen) return null;
+
   return (
     <div className="relative w-full">
       <Search className="absolute top-2 left-3 text-[#9CA3AF]" size={16} />

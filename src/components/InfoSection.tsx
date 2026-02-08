@@ -113,7 +113,13 @@ const info: InfoItem[] = [
   },
 ];
 
-export default function InfoSection() {
+interface InfoSectionProps {
+  isVisible: boolean;
+}
+
+export default function InfoSection({ isVisible }: InfoSectionProps) {
+  if (!isVisible) return null;
+
   return (
     <section className="w-full">
       <ul className="flex flex-col">
