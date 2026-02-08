@@ -1,25 +1,24 @@
 import { TextSearch, X } from "lucide-react";
-import { ProviderCard } from "./ProviderFilter";
+import { ProviderCard } from "./ProviderCard";
 import type { Provider } from "../types/types";
 
 interface ProviderDialog {
   isOpen: boolean;
   onClose: (status: boolean) => void;
+  selectedProvider: Provider | null;
+  onProviderClick: (provider: Provider) => void;
+  providers: Provider[];
+  providerCounts: Record<string, number>;
 }
 
-export default function ProviderDialog({ isOpen, onClose }: ProviderDialog) {
-  const mockProviders: Provider[] = [
-    { value: "skywind_group", label: "Skywind Group" },
-    { value: "pragmatic", label: "Pragmatic" },
-    { value: "hacksaw", label: "Hacksaw" },
-    { value: "pg", label: "PG" },
-    { value: "zitro", label: "Zitro" },
-    { value: "in_out", label: "In Out" },
-    { value: "imoon", label: "iMoon" },
-    { value: "ortiz", label: "Ortiz" },
-    { value: "playtech", label: "Playtech" },
-  ];
-
+export default function ProviderDialog({
+  isOpen,
+  onClose,
+  selectedProvider,
+  onProviderClick,
+  providers,
+  providerCounts,
+}: ProviderDialog) {
   if (!isOpen) return null;
 
   return (
@@ -38,7 +37,7 @@ export default function ProviderDialog({ isOpen, onClose }: ProviderDialog) {
             <TextSearch className="text-white" />
             <p className="text-sm text-white">Proveedor de Juegos</p>
             <div className="flex h-5.5 w-5.5 items-center justify-center rounded-full border-[1.35px] border-white">
-              <p className="text-sm text-white">0</p>
+              <p className="text-sm text-white">{providers.length}</p>
             </div>
           </div>
           <X
@@ -49,13 +48,13 @@ export default function ProviderDialog({ isOpen, onClose }: ProviderDialog) {
           />
         </div>
         <div className="grid grid-cols-2 gap-4 p-4">
-          {mockProviders.map((provider, idx) => (
+          {providers.map((provider, index) => (
             <ProviderCard
-              key={provider.value}
+              key={index}
               provider={provider}
-              amount={10 + idx}
-              isSelected={false}
-              onProviderClick={() => {}}
+              amount={providerCounts[provider.value]}
+              isSelected={provider === selectedProvider}
+              onProviderClick={onProviderClick}
               className="h-12 w-full rounded-md"
             />
           ))}

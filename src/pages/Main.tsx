@@ -23,6 +23,11 @@ export default function Main() {
    * the same
    */
 
+  /**
+   * Debated if the children components should consume the context
+   * instead of this parent page
+   */
+
   const {
     selectedCategory,
     setSelectedCategory,
@@ -106,6 +111,11 @@ export default function Main() {
       return total;
     }
 
+    // If selectedCategory is a provider, use providerCounts
+    if (providerCounts[selectedCategory.value] !== undefined) {
+      return providerCounts[selectedCategory.value];
+    }
+
     return counts[selectedCategory.value] || 0;
   };
 
@@ -131,7 +141,11 @@ export default function Main() {
         ? true
         : selectedCategory.value === "popular"
           ? game.isHot === true
-          : selectedCategory.value === game.category;
+          : selectedCategory.value === "pragmatic"
+            ? game.provider === "pragmatic"
+            : selectedCategory.value === "fat_panda"
+              ? game.provider === "fat_panda"
+              : selectedCategory.value === game.category;
 
     const providerMatch =
       !selectedProvider || game.provider === selectedProvider.value;
@@ -160,8 +174,12 @@ export default function Main() {
       <GameList games={filteredGames} />
       <InfoSection isVisible={selectedCategory.value === "home"} />
       <ProviderDialog
+        providers={filteredProviders}
         isOpen={isProviderDialogVisible}
         onClose={handleDialogToggle}
+        selectedProvider={selectedProvider}
+        onProviderClick={handleProviderClick}
+        providerCounts={providerCounts}
       />
     </div>
   );
