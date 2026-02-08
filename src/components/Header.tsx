@@ -3,7 +3,7 @@ import Button from "./Button";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 z-50 flex w-full flex-row items-center justify-between bg-white px-4 py-4">
+    <header className="fixed top-0 z-50 flex w-full flex-row items-center justify-between bg-white px-2 py-4">
       <div className="flex flex-row items-center gap-4">
         <Menu className="text-primary hover:cursor-pointer" />
         <img

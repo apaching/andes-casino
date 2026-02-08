@@ -1,17 +1,17 @@
+import { gameApi } from "../api/games";
+import { useGame } from "../hooks/useGame";
 import { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
 import GameList from "../components/GameList";
 import { useFilter } from "../hooks/useFilter";
+import { providerApi } from "../api/providers";
 import SearchBar from "../components/SearchBar";
-import type { Category, Provider } from "../types/types";
+import { useProvider } from "../hooks/useProvider";
+import InfoSection from "../components/InfoSection";
 import CategoryFilter from "../components/CategoryFilter";
 import ProviderFilter from "../components/ProviderFilter";
-import { gameApi } from "../api/games";
-import { useGame } from "../hooks/useGame";
-import InfoSection from "../components/InfoSection";
-import { providerApi } from "../api/providers";
-import { useProvider } from "../hooks/useProvider";
 import ProviderDialog from "../components/ProviderDialog";
+import type { Category, Provider } from "../types/types";
 
 export default function Main() {
   const [isProviderDialogVisible, setIsProviderDialogVisible] = useState(false);

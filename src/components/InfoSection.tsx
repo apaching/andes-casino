@@ -125,11 +125,11 @@ export default function InfoSection({ isVisible }: InfoSectionProps) {
       <ul className="flex flex-col">
         {info.map((item) => (
           <li key={item.id} className="flex flex-col">
-            <h3
-              className={`${item.hasLink ? "text-primary hover:cursor-pointer" : "text-txt"} text-[26px]`}
+            <p
+              className={`${item.hasLink ? "text-primary hover:cursor-pointer" : "text-txt"} text-[22px]`}
             >
               {item.title}
-            </h3>
+            </p>
             <p className="text-txt text-[16px]">{item.description}</p>
             {item.hasButton && (
               <Button buttonStyle="bg-primary rounded-3xl px-[32px] py-[8px] mx-auto mb-2.5">

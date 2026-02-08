@@ -255,7 +255,7 @@ export const mockGames: Game[] = [
     category: "slots",
     provider: "skywind_group",
     isHot: false,
-    image: "/game_pictures/sugar_onanza_deluxe.webp",
+    image: "/game_pictures/sugar_bonanza_deluxe.webp",
   },
   {
     id: "34",
@@ -398,6 +398,38 @@ export const gameApi = {
           providerCounts,
         });
       }, 3000);
+    });
+  },
+
+  searchGame: (
+    query: string,
+    offset = 0,
+    limit = 100,
+  ): Promise<{
+    success: boolean;
+    games: Game[];
+    hasMore: boolean;
+    total: number;
+  }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const searchQuery = query.toLowerCase().trim();
+
+        const filteredGames = mockGames.filter((game) =>
+          game.name.toLowerCase().includes(searchQuery),
+        );
+
+        const total = filteredGames.length;
+        const games = filteredGames.slice(offset, offset + limit);
+        const hasMore = offset + limit < total;
+
+        resolve({
+          success: true,
+          games,
+          hasMore,
+          total,
+        });
+      }, 500);
     });
   },
 };
